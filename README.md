@@ -25,13 +25,40 @@ matplotlib,
 tqdm,
 OpenCV,
 # Training Pipeline
-Model Initialization:
-Fine-tune ResNet18 by freezing earlier layers and modifying the fully connected layer for single-output regression.
+The training pipeline is designed to fine-tune a pretrained ResNet18 model for age prediction using a regression approach. Below is a detailed breakdown:
 
-Training and Validation:
-
-Implements a custom training loop with MSELoss and Adam optimizer.
-Monitors training and validation loss to detect overfitting.
+1. Model Initialization
+The ResNet18 model is loaded with pretrained weights (weights=ResNet18_Weights.IMAGENET1K_V1 for compatibility with PyTorch versions ≥ 0.13).
+Layers layer1, layer2, and layer3 are frozen to retain learned features from the pretrained model.
+The fully connected layer (fc) is replaced with a single output node for regression (predicting age as a continuous variable).
+2. Loss Function
+Mean Squared Error (MSELoss):
+Used as the loss function since it is suitable for regression tasks.
+Measures the squared difference between predicted and actual ages to minimize errors.
+3. Optimizer
+Adam Optimizer:
+Optimizes model parameters with an initial learning rate of 1e-4.
+Balances efficiency and adaptability during weight updates.
+4. Data Preprocessing
+Input images are resized and normalized.
+Dimensions are permuted to match the PyTorch format [batch_size, channels, height, width].
+5. Training Loop
+Epochs:
+The model is trained for a user-defined number of epochs (e.g., 10 by default).
+Batch Processing:
+Each batch of images and labels is passed through the model for forward propagation, loss calculation, and backpropagation.
+Freezing Layers:
+Only layer4 and fc are trainable to focus on task-specific learning while preventing overfitting.
+6. Validation
+After each epoch, the model evaluates on a separate validation dataset.
+The average validation loss is computed to monitor the model’s generalization.
+7. Performance Tracking
+Training and validation losses are printed after every epoch for easy monitoring:
+plaintext
+Copy code
+Epoch 1/10, Training Loss: 580.8863, Validation Loss: 184.5743
+8. Early Stopping (Optional)
+Overfitting can be mitigated by monitoring validation loss and stopping training early if it stops improving.
 Usage: To start training:
 ```python
 train_model(model, train_loader, val_loader, criterion, optimizer, num_epochs=10, device=device)
