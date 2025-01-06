@@ -24,3 +24,15 @@ numpy,
 matplotlib,
 tqdm,
 OpenCV,
+# Training Pipeline
+Model Initialization:
+Fine-tune ResNet18 by freezing earlier layers and modifying the fully connected layer for single-output regression.
+
+Training and Validation:
+
+Implements a custom training loop with MSELoss and Adam optimizer.
+Monitors training and validation loss to detect overfitting.
+Usage: To start training:
+```python
+train_model(model, train_loader, val_loader, criterion, optimizer, num_epochs=10, device=device)
+
