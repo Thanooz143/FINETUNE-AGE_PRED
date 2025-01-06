@@ -4,7 +4,7 @@ download model from - https://drive.google.com/drive/folders/14FbhmPiuO6TDgxoJU6
 
 This repository implements an age prediction system using a pretrained ResNet18 model, fine-tuned for regression. It includes training, validation, and testing pipelines, along with preprocessing steps and prediction visualization for single images.
 
-Features
+### Features
 
 1.**Pretrained ResNet18 Model**: Leverages transfer learning for age prediction with optimized fine-tuning.
 
